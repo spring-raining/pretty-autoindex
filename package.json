@@ -1,0 +1,19 @@
+{
+  "name": "pretty-autoindex",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/spring-raining/pretty-autoindex.git"
+  },
+  "author": "spring-raining",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/spring-raining/pretty-autoindex/issues"
+  },
+  "homepage": "https://github.com/spring-raining/pretty-autoindex#readme"
+}
