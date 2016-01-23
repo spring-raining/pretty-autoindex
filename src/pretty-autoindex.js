@@ -4,21 +4,43 @@ import VueRouter from 'vue-router';
 Vue.use(VueRouter);
 
 Vue.component('directory', {
-  props: ['name', 'path', 'mtime'],
+  props: ['name', 'path', 'icon', 'mtime'],
   template: `
-    <a v-link="path">{{ name }}</a>
+    <li class="files__directory menu-item columns">
+      <div class="three-fourths column">
+        <div class="files__icon-container">
+          <span v-if="icon"
+                class="octicon octicon-{{ icon }}"></span>
+        </div>
+        <a v-link="path">{{ name }}</a>
+      </div>
+      <div class="one-fourth column text-right">
+        {{ mtime }}
+      </div>
+    </li>
   `,
 });
 
 Vue.component('file', {
-  props: ['name', 'path', 'mtime', 'size'],
+  props: ['name', 'path', 'icon', 'mtime', 'size'],
   computed: {
     link: function() {
       return conf.address + this.path;
     },
   },
   template: `
-    <a :href="link">{{ name }}</a>
+    <li class="files__file menu-item columns">
+      <div class="three-fourths column">
+        <div class="files__icon-container">
+          <span v-if="icon"
+                class="octicon octicon-{{ icon }}"></span>
+        </div>
+        <a :href="link">{{ name }}</a>
+      </div>
+      <div class="one-fourth column text-right">
+        {{ mtime }}
+      </div>
+    </li>
   `,
 });
 
@@ -73,7 +95,8 @@ const App = Vue.extend({
       </span>
       <span class="breadcrumb__separator">/</span>
       <template v-for="(i, dir) in pathArray">
-        <span class="breadcrumb__directory">
+        <span class="breadcrumb__directory"
+              :class="{ 'last-one': pathArray.length === i + 1}">
           <a v-link="'/' + pathArray.slice(0, i+1).join('/')">
             {{ dir }}
           </a>
@@ -85,25 +108,29 @@ const App = Vue.extend({
       <div v-if="fetching">Fetching...</div>
       <div v-if="fetchingFailed">Fetching failed.</div>
     </div>
-    <div v-else>
-      <ul>
-        <li v-if="pathArray.length > 0">
-          <directory :name=".."
-                     :path="'/' + pathArray.slice(0, -1).join('/')">
-          </directory>
-        </li>
-        <li v-for="file in files">
-          <directory v-if="file.type === 'directory'"
-                     :name="file.name"
-                     :path="path + '/' + file.name">
-           </directory>
-          <file v-else
-                :path="path + '/' + file.name"
-                :name="file.name">
-          </file>
-        </li>
-      </ul>
-    </div>
+    <ul v-if="files !== null"
+        class="files menu">
+      <template v-if="pathArray.length > 0">
+        <directory :name=".."
+                   :path="'/' + pathArray.slice(0, -1).join('/')">
+        </directory>
+      </template>
+      <template v-for="file in files">
+        <directory v-if="file.type === 'directory'"
+                   icon="file-directory"
+                   :name="file.name"
+                   :path="path + '/' + file.name"
+                   :mtime="file.mtime">
+         </directory>
+        <file v-else
+              icon="file-text"
+              :path="path + '/' + file.name"
+              :name="file.name"
+              :mtime="file.mtime"
+              :size="file.size">
+        </file>
+      </template>
+    </ul>
   `,
 });
 

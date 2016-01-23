@@ -5,13 +5,14 @@ import browserify from 'gulp-browserify';
 import babelify from 'babelify';
 import vueify from 'vueify';
 import uglify from 'gulp-uglify';
+import sass from 'gulp-sass';
 
 gulp.task('default', ['build']);
 
 gulp.task('build', (callback) => {
   return sequence.use(gulp)(
     'clean',
-    ['js', 'html'],
+    ['js', 'css', 'html'],
     callback
   );
 });
@@ -21,12 +22,20 @@ gulp.task('clean', del.bind(null, [
 ]));
 
 gulp.task('js', (callback) => {
-  gulp.src('src/main.js')
+  gulp.src('src/pretty-autoindex.js')
     .pipe(browserify({
       extensions: ['.js', '.vue'],
       transform: ['babelify', 'vueify'],
     }))
     .pipe(uglify())
+    .pipe(gulp.dest('./dist'));
+});
+
+gulp.task('css', (callback) => {
+  gulp.src('css/*.scss')
+    .pipe(sass({
+      outputStyle: "compressed",
+    }))
     .pipe(gulp.dest('./dist'));
 });
 

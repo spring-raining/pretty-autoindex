@@ -1,0 +1,58 @@
+@charset "UTF-8";
+
+@import "../node_modules/primer-css/scss/primer";
+@import "octicons";
+
+.container {
+  margin-top: 24px;
+}
+
+.octicon {
+  .files__directory & {
+    color: #80a6cd;
+  }
+
+  .files__file & {
+    color: #767676;
+  }
+}
+
+.breadcrumb {
+  font-size: 18px;
+  margin-bottom: 12px;
+
+  .breadcrumb__root {
+    @extend .text-emphasized;
+  }
+
+  .breadcrumb__separator {
+    color: $brand-gray;
+  }
+
+  .breadcrumb__directory {
+    &.last-one {
+      @extend .text-emphasized;
+
+      a {
+        color: $brand-gray-dark;
+
+        &:hover {
+          color: $brand-blue;
+          text-decoration: none;
+        }
+      }
+    }
+  }
+}
+
+.files {
+  .columns {
+    margin-right: 0;
+    margin-left: 0;
+  }
+
+  .files__icon-container {
+    display: inline-block;
+    width: 25px;
+  }
+}

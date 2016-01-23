@@ -2,7 +2,6 @@
   "name": "pretty-autoindex",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
   "scripts": {
     "build": "./node_modules/gulp/bin/gulp.js build",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -24,7 +23,9 @@
     "babelify": "^7.2.0",
     "gulp": "^3.9.0",
     "gulp-browserify": "^0.5.1",
+    "gulp-sass": "^2.1.1",
     "gulp-uglify": "^1.5.1",
+    "primer-css": "^2.5.0",
     "vue": "^1.0.15",
     "vue-router": "^0.7.9",
     "vueify": "^8.3.2"
