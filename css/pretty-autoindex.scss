@@ -19,6 +19,7 @@
 
 .breadcrumb {
   font-size: 18px;
+  margin-left: 45px;
   margin-bottom: 12px;
 
   .breadcrumb__root {
@@ -54,5 +55,57 @@
   .files__icon-container {
     display: inline-block;
     width: 25px;
+  }
+}
+
+.loading {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(255, 255, 255, 0.5);
+  z-index: 1000;
+
+  .loading__spinner,
+  .loading__spinner::before {
+    position: relative;
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    border: 2px solid transparent;
+    border-top-color: $brand-blue;
+    border-radius: 50%;
+    box-sizing: border-box;
+  }
+
+  .loading__spinner {
+
+    float:left;
+    margin: 4px 10px 4px 0;
+    animation: spin 0.5s infinite linear;
+  }
+
+  .loading__spinner::before {
+    content: '';
+    position: absolute;
+    left: -2px;
+    top: -2px;
+    transform: rotate(180deg);
+  }
+
+  .loading__failed {
+    color: $brand-red;
+    font-size: 18px;
+    font-weight: bold;
+  }
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
   }
 }

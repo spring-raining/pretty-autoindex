@@ -44,14 +44,29 @@ Vue.component('file', {
   `,
 });
 
+Vue.component('loading', {
+  props: ['loading', 'failed'],
+  template: `
+    <div v-if="loading || failed"
+         class="loading">
+      <div class="container">
+        <div v-if="loading" class="loading__spinner"></div>
+        <div v-if="failed" class="loading__failed">
+          Load failed.
+        </div>
+      </div>
+    </div>
+  `,
+});
+
 const App = Vue.extend({
   data() {
     return {
       path: '',
       conf: conf,
       files: null,
-      fetching: false,
-      fetchingFailed: false,
+      loading: false,
+      failed: false,
     };
   },
 
@@ -63,24 +78,24 @@ const App = Vue.extend({
 
   methods: {
     fetchFileInfo() {
-      this.fetchingFailed = false;
-      this.fetching = true;
+      this.failed = false;
+      this.loading = true;
 
       const xhr = new XMLHttpRequest();
       const address = conf.address + this.path;
       xhr.open('GET', address);
       xhr.onloadend = () => {
         if (xhr.status !== 200) {
-          this.fetchingFailed = true;
-          this.fetching = false;
+          this.failed = true;
+          this.loading = false;
         }
         else {
           try {
             this.files = JSON.parse(xhr.responseText);
-            this.fetching = false;
+            this.loading = false;
           } catch(e) {
-            this.fetchingFailed = true;
-            this.fetching = false;
+            this.failed = true;
+            this.loading = false;
           }
         }
       };
@@ -89,6 +104,7 @@ const App = Vue.extend({
   },
 
   template: `
+    <loading :loading="loading" :failed="failed"></loading>
     <div class="breadcrumb">
       <span class="breadcrumb__root">
         <a v-link="'/'">{{ conf.name }}</a>
@@ -103,10 +119,6 @@ const App = Vue.extend({
         </span>
         <span class="breadcrumb__separator">/</span>
       </template>
-    </div>
-    <div v-if="fetching || fetchingFailed">
-      <div v-if="fetching">Fetching...</div>
-      <div v-if="fetchingFailed">Fetching failed.</div>
     </div>
     <ul v-if="files !== null"
         class="files menu">
