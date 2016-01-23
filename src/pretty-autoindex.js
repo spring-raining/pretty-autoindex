@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
+import moment from 'moment';
 
 import packageJson from '../package.json';
 
@@ -7,6 +8,12 @@ Vue.use(VueRouter);
 
 Vue.component('directory', {
   props: ['name', 'path', 'icon', 'mtime'],
+  computed: {
+    age: function() {
+      var m = moment(new Date(this.mtime));
+      return (this.mtime && m.isValid())? m.fromNow() : null;
+    },
+  },
   template: `
     <li class="files__directory menu-item columns">
       <div class="three-fourths column">
@@ -17,7 +24,7 @@ Vue.component('directory', {
         <a v-link="path">{{ name }}</a>
       </div>
       <div class="one-fourth column text-right">
-        {{ mtime }}
+        {{ age }}
       </div>
     </li>
   `,
@@ -26,6 +33,10 @@ Vue.component('directory', {
 Vue.component('file', {
   props: ['name', 'path', 'icon', 'mtime', 'size'],
   computed: {
+    age: function() {
+      var m = moment(new Date(this.mtime));
+      return (this.mtime && m.isValid())? m.fromNow() : null;
+    },
     link: function() {
       return conf.address + this.path;
     },
@@ -40,7 +51,7 @@ Vue.component('file', {
         <a :href="link">{{ name }}</a>
       </div>
       <div class="one-fourth column text-right">
-        {{ mtime }}
+        {{ age }}
       </div>
     </li>
   `,
