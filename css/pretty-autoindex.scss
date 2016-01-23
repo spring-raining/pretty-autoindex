@@ -17,6 +17,10 @@
   }
 }
 
+.app {
+  min-height: 100vh;
+}
+
 .breadcrumb {
   font-size: 18px;
   margin-left: 45px;
@@ -107,5 +111,25 @@
   }
   to {
     transform: rotate(360deg);
+  }
+}
+
+.footer {
+  text-align: right;
+  border-top: 1px solid #d8d8d8;
+  padding: 16px 0;
+
+  .footer__text {
+    display: inline-block;
+    color: $brand-gray;
+  }
+
+  .footer__mark {
+    display: inline-block;
+    margin: 0 16px;
+
+    .octicon {
+      font-size: 24px;
+    }
   }
 }

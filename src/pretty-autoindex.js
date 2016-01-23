@@ -1,6 +1,8 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 
+import packageJson from '../package.json';
+
 Vue.use(VueRouter);
 
 Vue.component('directory', {
@@ -64,6 +66,7 @@ const App = Vue.extend({
     return {
       path: '',
       conf: conf,
+      packageJson: packageJson,
       files: null,
       loading: false,
       failed: false,
@@ -105,44 +108,63 @@ const App = Vue.extend({
 
   template: `
     <loading :loading="loading" :failed="failed"></loading>
-    <div class="breadcrumb">
-      <span class="breadcrumb__root">
-        <a v-link="'/'">{{ conf.name }}</a>
-      </span>
-      <span class="breadcrumb__separator">/</span>
-      <template v-for="(i, dir) in pathArray">
-        <span class="breadcrumb__directory"
-              :class="{ 'last-one': pathArray.length === i + 1}">
-          <a v-link="'/' + pathArray.slice(0, i+1).join('/')">
-            {{ dir }}
-          </a>
+    <div class="app">
+      <div class="breadcrumb">
+        <span class="breadcrumb__root">
+          <a v-link="'/'">{{ conf.name }}</a>
         </span>
         <span class="breadcrumb__separator">/</span>
-      </template>
+        <template v-for="(i, dir) in pathArray">
+          <span class="breadcrumb__directory"
+                :class="{ 'last-one': pathArray.length === i + 1}">
+            <a v-link="'/' + pathArray.slice(0, i+1).join('/')">
+              {{ dir }}
+            </a>
+          </span>
+          <span class="breadcrumb__separator">/</span>
+        </template>
+      </div>
+      <ul v-if="files !== null"
+          class="files menu">
+        <template v-if="pathArray.length > 0">
+          <directory :name=".."
+                     :path="'/' + pathArray.slice(0, -1).join('/')">
+          </directory>
+        </template>
+        <template v-for="file in files">
+          <directory v-if="file.type === 'directory'"
+                     icon="file-directory"
+                     :name="file.name"
+                     :path="path + '/' + file.name"
+                     :mtime="file.mtime">
+           </directory>
+          <file v-else
+                icon="file-text"
+                :path="path + '/' + file.name"
+                :name="file.name"
+                :mtime="file.mtime"
+                :size="file.size">
+          </file>
+        </template>
+      </ul>
     </div>
-    <ul v-if="files !== null"
-        class="files menu">
-      <template v-if="pathArray.length > 0">
-        <directory :name=".."
-                   :path="'/' + pathArray.slice(0, -1).join('/')">
-        </directory>
-      </template>
-      <template v-for="file in files">
-        <directory v-if="file.type === 'directory'"
-                   icon="file-directory"
-                   :name="file.name"
-                   :path="path + '/' + file.name"
-                   :mtime="file.mtime">
-         </directory>
-        <file v-else
-              icon="file-text"
-              :path="path + '/' + file.name"
-              :name="file.name"
-              :mtime="file.mtime"
-              :size="file.size">
-        </file>
-      </template>
-    </ul>
+
+    <footer class="footer">
+      <div class="footer__text">
+        Generated with
+        <a href="{{ packageJson.homepage }}"
+           class="muted-link">
+          {{ packageJson.name }}
+        </a>
+        {{ packageJson.version }}.
+      </div>
+      <div class="footer__mark">
+        <a href="{{ packageJson.homepage }}"
+           class="muted-link">
+          <span class="octicon octicon-mark-github"></span>
+        </a>
+      </div>
+    </footer>
   `,
 });
 
