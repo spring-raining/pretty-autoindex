@@ -26,6 +26,7 @@
     "gulp-browserify": "^0.5.1",
     "gulp-uglify": "^1.5.1",
     "vue": "^1.0.15",
+    "vue-router": "^0.7.9",
     "vueify": "^8.3.2"
   },
   "babel": {
