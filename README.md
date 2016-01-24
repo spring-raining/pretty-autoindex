@@ -2,6 +2,8 @@
 
 Show nginx autoindex more pretty!
 
+![demo.gif](https://raw.githubusercontent.com/spring-raining/pretty-autoindex/gh-pages/static/demo.gif)
+
 ## Installation
 
 Download files to your server.
