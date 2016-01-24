@@ -11,7 +11,7 @@ $ git clone https://github.com/spring-raining/pretty-autoindex.git
 ```
 
 Before using it, you need to set some nginx configurations.
-(In this expamle, I'm using IP address and port represent as `192.168.10.108:10080`
+(In this expamle, The IP address and the port represent as `192.168.10.108:10080`
 so you should replace them as necessary.)
 
 ```nginx
