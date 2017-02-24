@@ -47,18 +47,19 @@ server {
 And set a conf variable in index.html.
 
 ```sh-session
-$ vim /path/to/pretty-autoindex/dist/index.html
+$ vim /path/to/pretty-autoindex/dist/config.js
 ```
 
 ```html
-  :
-  <script>
-    var conf = {
+var conf = {
       name: 'A wonderful name that you want',
-      address: 'http://192.168.10.108:10080'
-    };
-  </script>
-  :
+      address: 'http://192.168.10.108:10080',
+
+      visibilityOptions: {
+          size: true,
+          date: true
+      }
+};
 ```
 
 Then, restart nginx and access `http://192.168.10.108`.
