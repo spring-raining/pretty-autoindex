@@ -27,7 +27,7 @@
     "gulp-sass": "^2.1.1",
     "gulp-uglify": "^1.5.1",
     "moment": "^2.11.1",
-    "primer-css": "^2.5.0",
+    "primer-css": "^3.0.0",
     "run-sequence": "^1.1.5",
     "vue": "^1.0.15",
     "vue-router": "^0.7.9",
