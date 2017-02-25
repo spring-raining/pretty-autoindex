@@ -50,14 +50,20 @@ And set a conf variable in index.html.
 $ vim /path/to/pretty-autoindex/dist/config.js
 ```
 
-```html
+```javascript
 var conf = {
       name: 'A wonderful name that you want',
       address: 'http://192.168.10.108:10080',
 
       visibilityOptions: {
-          size: true,
-          date: true
+          size: {
+              use: true,
+              type: 'readable' //raw, readable, both
+          },
+          date: {
+              use: true,
+              type: 'moment' //raw, moment, both
+          }
       }
 };
 ```

@@ -15,8 +15,8 @@ Vue.component('directory', {
     },
   },
   methods: {
-    showPropertyWrapper: function(option, data) {
-      return Vue.showProperty(option, data);
+    showPropertyWrapper: function(propertyName, propertyConfig, property) {
+      return Vue.showProperty(propertyName, propertyConfig, property);
     },
   },
   template: `
@@ -28,10 +28,10 @@ Vue.component('directory', {
         </div>
         <a v-link="path">{{ name }}</a>
       </div>
-      <div v-for="(option, enabled) in visibilityOptions"
+      <div v-for="(propertyName, propertyConfig) in visibilityOptions"
            class="flex-table-item pr-1 text-right">
-        <template v-if="enabled">
-          {{ showPropertyWrapper(option, {date: this.mtime}) }}
+        <template v-if="propertyConfig['use']">
+          {{ showPropertyWrapper(propertyName, propertyConfig, {date: this.mtime}) }}
         </template>
       </div>
     </li>
@@ -49,8 +49,8 @@ Vue.component('file', {
     },
   },
   methods: {
-    showPropertyWrapper: function(option, data) {
-      return Vue.showProperty(option, data);
+    showPropertyWrapper: function(propertyName, propertyConfig, property) {
+      return Vue.showProperty(propertyName, propertyConfig, property);
     },
   },
   template: `
@@ -62,10 +62,10 @@ Vue.component('file', {
         </div>
         <a :href="link">{{ name }}</a>
       </div>
-      <div v-for="(option, enabled) in visibilityOptions"
+      <div v-for="(propertyName, propertyConfig) in visibilityOptions"
            class="flex-table-item pr-1 text-right">
-        <template v-if="enabled">
-          {{ showPropertyWrapper(option, {date: this.mtime, size: this.size}) }}
+        <template v-if="propertyConfig['use']">
+          {{ showPropertyWrapper(propertyName, propertyConfig, {date: this.mtime, size: this.size}) }}
         </template>
       </div>
     </li>
