@@ -1,30 +1,38 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import moment from 'moment';
+import Helper from './helper.js';
 
 import packageJson from '../package.json';
 
 Vue.use(VueRouter);
+Vue.use(Helper);
 
 Vue.component('directory', {
   props: ['name', 'path', 'icon', 'mtime'],
   computed: {
-    age: function() {
-      var m = moment(new Date(this.mtime));
-      return (this.mtime && m.isValid())? m.fromNow() : null;
+    visibilityOptions: function() {
+      return conf.visibilityOptions;
+    },
+  },
+  methods: {
+    showPropertyWrapper: function(propertyName, propertyConfig, property) {
+      return Vue.showProperty(propertyName, propertyConfig, property);
     },
   },
   template: `
     <li class="files__directory menu-item columns">
-      <div class="three-fourths column">
+      <div class="flex-table-item flex-table-item-primary">
         <div class="files__icon-container">
           <span v-if="icon"
                 class="octicon octicon-{{ icon }}"></span>
         </div>
         <a v-link="path">{{ name }}</a>
       </div>
-      <div class="one-fourth column text-right">
-        {{ age }}
+      <div v-for="(propertyName, propertyConfig) in visibilityOptions"
+           class="flex-table-item pr-1 text-right">
+        <template v-if="propertyConfig['use']">
+          {{ showPropertyWrapper(propertyName, propertyConfig, {date: this.mtime}) }}
+        </template>
       </div>
     </li>
   `,
@@ -33,25 +41,32 @@ Vue.component('directory', {
 Vue.component('file', {
   props: ['name', 'path', 'icon', 'mtime', 'size'],
   computed: {
-    age: function() {
-      var m = moment(new Date(this.mtime));
-      return (this.mtime && m.isValid())? m.fromNow() : null;
+    visibilityOptions: function() {
+      return conf.visibilityOptions;
     },
     link: function() {
       return conf.address + this.path;
     },
   },
+  methods: {
+    showPropertyWrapper: function(propertyName, propertyConfig, property) {
+      return Vue.showProperty(propertyName, propertyConfig, property);
+    },
+  },
   template: `
-    <li class="files__file menu-item columns">
-      <div class="three-fourths column">
+    <li class="files__file menu-item flex-table">
+      <div class="flex-table-item flex-table-item-primary">
         <div class="files__icon-container">
           <span v-if="icon"
                 class="octicon octicon-{{ icon }}"></span>
         </div>
         <a :href="link">{{ name }}</a>
       </div>
-      <div class="one-fourth column text-right">
-        {{ age }}
+      <div v-for="(propertyName, propertyConfig) in visibilityOptions"
+           class="flex-table-item pr-1 text-right">
+        <template v-if="propertyConfig['use']">
+          {{ showPropertyWrapper(propertyName, propertyConfig, {date: this.mtime, size: this.size}) }}
+        </template>
       </div>
     </li>
   `,

@@ -22,12 +22,14 @@ gulp.task('clean', del.bind(null, [
 ]));
 
 gulp.task('js', (callback) => {
-  gulp.src('src/pretty-autoindex.js')
+  gulp.src(['src/pretty-autoindex.js', 'src/helper.js'])
     .pipe(browserify({
       extensions: ['.js', '.vue'],
       transform: ['babelify', 'vueify'],
     }))
     .pipe(uglify())
+    .pipe(gulp.dest('./dist'));
+  gulp.src('src/config.js')
     .pipe(gulp.dest('./dist'));
 });
 
