@@ -10,6 +10,8 @@ Download files to your server.
 
 ```sh-session
 $ git clone https://github.com/spring-raining/pretty-autoindex.git
+or
+$ npm install pretty-autoindex
 ```
 
 Before using it, you need to set some nginx configurations.
@@ -20,13 +22,13 @@ so you should replace them as necessary.)
 # pretty-autoindex try to access this address, and display indexes dynamically.
 server {
     listen  10080;
-    
+
     location / {
         root    /path/to/you/want/to/show;
         autoindex   on;
         autoindex_format    json;
-        
-        # Enable your browser to access here. 
+
+        # Enable your browser to access here.
         add_header  Access-Control-Allow-Origin "http://192.168.10.108";
         add_header  Access-Control-Allow-Methods "GET, POST, OPTIONS";
         add_header  Access-Control-Allow-Headers "Origin, Authorization, Accept";
@@ -37,7 +39,7 @@ server {
 # This is an actual page.
 server {
     listen  80;
-    
+
     location / {
         root    /path/to/pretty-autoindex/dist;
     }

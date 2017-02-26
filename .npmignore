@@ -1,0 +1,4 @@
+/src/
+/css/
+.git*
+gulpfile.babel.js
