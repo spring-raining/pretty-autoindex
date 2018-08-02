@@ -22,7 +22,7 @@ const Helper = {
 
     Vue.getReadableDate = function(time) {
       var d = new Date(time);
-      return d.getFullYear() + '/' + d.getMonth() + '/' + d.getDate() + ' ' + d.toLocaleTimeString();
+      return d.getFullYear() + '/' + (+d.getMonth()+1) + '/' + d.getDate() + ' ' + d.toLocaleTimeString();
     }
 
     Vue.getMomentDate = function(time) {
