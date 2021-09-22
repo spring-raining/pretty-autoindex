@@ -111,6 +111,7 @@ const App = Vue.extend({
       this.loading = true;
 
       const xhr = new XMLHttpRequest();
+      this.path = decodeURIComponent(this.path);
       const address = conf.address + this.path;
       xhr.open('GET', address);
       xhr.onloadend = () => {
